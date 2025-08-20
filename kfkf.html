@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  body{
+    display: flex;
+    justify-content: center;
+    
+  }
+    .image-container {
+      position: relative;
+      display: inline-block;
+      font-size: large;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+   img{
+    max-width: 500px;
+    max-width: 500px;
+   }
+    .text-overlay {
+      position: absolute;
+      top: 10%;
+      left:40%;
+      /* transform: translate(-50%, -50%); */
+      color: white; /* Text color */
+      font-size: 24px; /* Text size */
+      font-weight: bold; /* Text weight */
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Optional: shadow for better readability */
+    }
+    .text-overlay2 {
+      position: absolute;
+      top: 80%;
+      left:40%;
+      /* transform: translate(-50%, -50%); */
+      color: white; /* Text color */
+      font-size: 24px; /* Text size */
+      font-weight: bold; /* Text weight */
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Optional: shadow for better readability */
+    }
+  </style>
+<body>
+    <div class="image-container">
+      <div id="display-text" class="text-overlay">Your Text Here</div>
+        <img  id="image" src="your-image.jpg" alt="Image">
+        <div class="text-overlay2">Your Text Here</div>
+      </div>
+      <label for="dynamic-input">Enter Text:</label>
+      <input type="text" id="dynamic-input" placeholder="Type something...">
+    
+</body>
+<script>
+    let image=document.getElementById('image')
+    fetch('https://api.imgflip.com/get_memes')
+  .then(response => response.json())
+  .then(users => {
+    let random=Math.floor(Math.random()*100);
+    const firstPostTitle = users.data.memes[random].url;
+    
+    image.src=firstPostTitle  // Output: Array of user objects
+    console.log(users)
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+  const inputField = document.getElementById('dynamic-input');
+    const displayText = document.getElementById('display-text');
+  inputField.addEventListener('input', function() {
+      // Update the text content of the display element with the input value
+      displayText.textContent = inputField.value;
+    });
+</script>
+</html>
